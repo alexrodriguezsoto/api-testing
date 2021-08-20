@@ -1,4 +1,5 @@
 package api_class1;
+
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.testng.annotations.Test;
@@ -10,7 +11,7 @@ import static io.restassured.RestAssured.*;
 /**
  * POST Log in api.octoperf.com
  */
-public class postRequest_01 {
+public class postRequest_01_1 {
 
     // in order to make a request we need to identify the baseURI
     public static String baseURI = "https://api.octoperf.com/public/users";
@@ -62,7 +63,7 @@ public class postRequest_01 {
     }
 
     //We can pass multiple parameters in same method;
-    //instead of using queryParam() we have to use queryParams() method.
+    //instead of using param() we have to use queryParams() method.
     @Test
     public void multiplelineQueryParams() {
         RestAssured.baseURI = "https://api.octoperf.com/public/users";
@@ -88,3 +89,4 @@ public class postRequest_01 {
                 .statusCode(200);
     }
 }
+

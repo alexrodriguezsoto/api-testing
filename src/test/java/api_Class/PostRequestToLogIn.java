@@ -17,7 +17,8 @@ public class PostRequestToLogIn {
     //FUll URL with Query params: https://api.octoperf.com/public/users/login?password=test12&username=tla.jiraone@gmail.com
     //Query Parameter : password=test12 and username=tla.jiraone@gmail.com, where password is key and test12 is value.
 
-
+    //
+    //
     @Test
     public void urlWithQueryParams(){
         RestAssured.given()

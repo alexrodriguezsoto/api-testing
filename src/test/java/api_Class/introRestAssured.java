@@ -31,7 +31,7 @@ public class introRestAssured {
     We have to types of parameters as follows:
     Path param --> is part of the url. Ex: https://api.octoperf.com:443/public/users/login/, separated by single / slash
     query/request param  --> is not part of the url. Ex: https://api.octoperf.com/public/users/login?password=test12&username=tla.jiraone@gmail.com
-    where after ? is end of url, and everything else thereafter is in key and value parameter.
+    ? --> means end of url, after that it's (key and value) query parameter.
     Ex: Query Parameter : password=test12 and username=tla.jiraone@gmail.com, where key is password and its value test12 and so on.
      */
 

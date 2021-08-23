@@ -6,18 +6,24 @@ import org.testng.annotations.Test;
 import java.util.HashMap;
 import static io.restassured.RestAssured.given;
 
-// Today we'll just talked about the different ways that we can log in into our API server
+/*Today we'll just talk about the different ways that we can log in into our API server such as Map, passing
+parameters using query/request parameter and path parameter, and some methods from RestAssured library.
+ */
+
+
 public class PostRequestToLogIn {
 
     public static String baseURI = "https://api.octoperf.com/public/users";
     private String path = "/login";
 
-    //Params defined in the POST Request log in with response body token
+    //After requesting a POST to log in, the server asks for a token that we'll get from Postman to gain access.
     //FULL URL : https://api.octoperf.com/public/users/login
+    //base url : https://api.octoperf.com/public/users/
+    //endpoint : /login
     //FUll URL with Query params: https://api.octoperf.com/public/users/login?password=test12&username=tla.jiraone@gmail.com
     //Query Parameter : password=test12 and username=tla.jiraone@gmail.com, where password is key and test12 is value.
 
-    //
+    // using the whole full resource url with request params to log in
     @Test
     public void urlWithQueryParams(){
         RestAssured.given()
@@ -26,16 +32,15 @@ public class PostRequestToLogIn {
                 .prettyPrint();
     }
 
-
-
+    // log in with HashMap
+    //HashMap store items in "key and value" pair. You can access them by an index of another type.
+    //One object is used as a key(index) to another object(value). Hashmap can store different type of objects
+    //for instance, String keys and Integer values, or same type like String keys and String values.
     @Test
     public void hashMapQueryParams(){
         RestAssured.baseURI = "https://api.octoperf.com/public/users";
         String path = "/login";
 
-        //Hashmap store items in a "key/value" pairs. You can access them by an index of another type.
-        //One object is used as a key (index) to another object (value). It can store different types:
-        //String keys and Integer values, or the same type, like: String keys and String values:
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("password", "test12");
         map.put("username", "tla.jiraone@gmail.com");
@@ -47,6 +52,22 @@ public class PostRequestToLogIn {
                 .prettyPrint();
     }
 
+
+    // Log in with Query/Request parameter, later on we might log in with path parameter, but the logic is same
+    @Test
+    public void staticQueryParams() {
+        RestAssured.baseURI = "https://api.octoperf.com/public/users";
+        String path = "/login";
+        given().contentType(ContentType.JSON) // without class reference
+                .queryParam("password", "test12")
+                .queryParam("username","tla.jiraone@gmail.com")
+                .when()
+                .post(path)
+                .then()
+                .statusCode(200);
+    }
+
+    // 1) calling static method from RestAssured Class
     @Test
     public void logInParam(){
         RestAssured.baseURI = "https://api.octoperf.com/public/users";
@@ -60,8 +81,9 @@ public class PostRequestToLogIn {
 
     }
 
+    // 2) calling static method from RestAssured Class
     //We can pass multiple parameters in same method;
-    //instead of using queryParam() we have to use queryParams() method.
+    //instead of using param() we can use queryParams() method.
     @Test
     public void multiplelineQueryParams() {
         RestAssured.baseURI = "https://api.octoperf.com/public/users";
@@ -71,19 +93,5 @@ public class PostRequestToLogIn {
                 .when()
                 .post(path)
                 .prettyPrint();
-    }
-
-    // calling static method from RestAssured Class
-    @Test
-    public void staticQueryParams() {
-        RestAssured.baseURI = "https://api.octoperf.com/public/users";
-        String path = "/login";
-        given().contentType(ContentType.JSON) // without class reference
-                .queryParam("password", "test12")
-                .queryParam("username","tla.jiraone@gmail.com")
-                .when()
-                .post(path)
-                .then()
-                .statusCode(200);
     }
 }

@@ -1,28 +1,25 @@
-package api_class1;
+package api_Class;
+
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.testng.annotations.Test;
-
 import java.util.HashMap;
+import static io.restassured.RestAssured.given;
 
-import static io.restassured.RestAssured.*;
+// Today we'll just talked about the different ways that we can log in into our API server
+public class PostRequestToLogIn {
 
-/**
- * POST Log in api.octoperf.com
- */
-public class postRequest_01 {
-
-    // in order to make a request we need to identify the baseURI
     public static String baseURI = "https://api.octoperf.com/public/users";
-    // define path for your API Request
     private String path = "/login";
 
     //Params defined in the POST Request log in with response body token
-    //Actual End Point : https://api.octoperf.com/public/users/login
-    //Api End Point with Query: https://api.octoperf.com/public/users/login?password=test12&username=tla.jiraone@gmail.com
-    //Query Parameter : password=test12 and username=tla.jiraone@gmail.com
+    //FULL URL : https://api.octoperf.com/public/users/login
+    //FUll URL with Query params: https://api.octoperf.com/public/users/login?password=test12&username=tla.jiraone@gmail.com
+    //Query Parameter : password=test12 and username=tla.jiraone@gmail.com, where password is key and test12 is value.
+
+
     @Test
-    public void noQueryParams(){
+    public void urlWithQueryParams(){
         RestAssured.given()
                 .when()
                 .post("https://api.octoperf.com/public/users/login?password=test12&username=tla.jiraone@gmail.com")

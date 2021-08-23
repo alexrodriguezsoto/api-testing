@@ -1,4 +1,4 @@
-package api_class1;
+package api_Class;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -7,8 +7,7 @@ import org.testng.annotations.Test;
 
 import java.util.HashMap;
 
-public class postRequest_02 {
-
+public class VerifyPostRequests {
     private String path;
 
     @BeforeClass
@@ -16,7 +15,6 @@ public class postRequest_02 {
         RestAssured.baseURI = "https://api.octoperf.com:443/public/users";
         path = "/login";
     }
-
 
     // Query Params using HashMap to pass parameters as map
     @Test
@@ -51,6 +49,4 @@ public class postRequest_02 {
         System.out.println("Verify Content Type JSON successful");
 
     }
-
-
 }

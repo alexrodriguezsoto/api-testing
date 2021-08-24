@@ -1,6 +1,7 @@
-package api_Class;
+package api_Class.API_Day2;
 
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -38,12 +39,8 @@ public class getRequestsApiWithLogs {
 
     @Test
     public void testingLogs1() {
-        // logging all()
-        RestAssured.
-                given().log().all(). // or everything() works same way as all()
-                when().get("https://api.octoperf.com/app/#/access/signin").then().statusCode(200);
 
-        // Logging only the url
+        // Logging the url only
         RestAssured.
                 given().log().uri().
                 when().get("https://api.octoperf.com/app/#/access/signin").then().statusCode(200);
@@ -54,15 +51,24 @@ public class getRequestsApiWithLogs {
                 when().get("https://api.octoperf.com/app/#/access/signin").then().statusCode(200);
     }
 
-    // Log fail response
+    // logging all()
+    @Test
+    public void LogAll(){
+        RestAssured.
+                given().log().all(). // or everything() works same way as all()
+                when().get("https://api.octoperf.com/app/#/access/signin").then().statusCode(200);
+    }
+
+    // Log fail
     @Test
     public void logFail(){
         RestAssured.
                 when().get("https://api.octoperf.com/app/#/access/signin").
-                then().log().ifValidationFails().statusCode(200);
+                then().log().ifValidationFails().statusCode(204); // will log only if validation fails
+            // then().log().ifValidationFails().statusCode(200); // test will passed because validation log is correct 200
     }
 
-    // log whether the status code is equal to 200
+    // log if status code is 200
     @Test
     public void logStatusCode(){
         RestAssured.

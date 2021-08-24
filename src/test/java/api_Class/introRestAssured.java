@@ -5,12 +5,14 @@ import io.restassured.http.ContentType;
 import org.testng.annotations.Test;
 
 public class introRestAssured {
-// Rest-Assured is a library class that uses gherkin BDD style statements such as given, when, then, and, etc
-// Rest-Assured works with GET, POST, PUT and DELETE operations, but as a tester you mainly perform
-// GET to request response from a server, and POST to create information to a server.
-// Testers mostly use and GET and POST, PUT and DElETE will only be used when needed.
+// Rest Assured is a Java library class that is used to perform automated API tests which
+// uses gherkin BDD style statements such as given, when, then, and, etc to write such tests.
+// Rest Assured has methods to fetch data from the request and response from JSON structures and in order
+// to do that Rest-Assured works with HTTP methods such as GET, POST, PUT and DELETE, but as a tester you'll
+// mainly use GET to request response from a server, and POST to create information to a server.
+// Testers mostly use and GET and POST, PUT and DELETE will only be used when needed.
 
-// Most often used methods from Rest-Asssured library:
+// Most often used methods from Rest-Asssured library when writing tests:
     // given() --> used to prepare the request
     // when() and get() or just when() --> used to send the request
     // then() --> used to verify the request

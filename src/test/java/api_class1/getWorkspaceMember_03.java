@@ -49,6 +49,7 @@ public class getWorkspaceMember_03 {
         System.out.println(jsonpathEvaluator.get("token").toString());
 
         //Store in a MAP key value response for the token so it can be used in many requests
+       //  "token": "834f9392-ce89-411c-8366-00c86886ec9b"
         list = new HashMap<String, String>();
         list.put("Authorization", token);
         System.out.println(list);

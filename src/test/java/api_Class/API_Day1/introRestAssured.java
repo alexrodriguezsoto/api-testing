@@ -1,4 +1,4 @@
-package api_Class;
+package api_Class.API_Day1;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -7,10 +7,10 @@ import org.testng.annotations.Test;
 public class introRestAssured {
 // Rest Assured is a Java library class that is used to perform automated API tests which
 // uses gherkin BDD style statements such as given, when, then, and, etc to write such tests.
-// Rest Assured has methods to fetch data from the request and response from JSON structures and in order
-// to do that Rest-Assured works with HTTP methods such as GET, POST, PUT and DELETE, but as a tester you'll
-// mainly use GET to request response from a server, and POST to create information to a server.
-// Testers mostly use and GET and POST, PUT and DELETE will only be used when needed.
+// Rest Assured has methods to fetch data from the request and response from JSON structures.
+// Rest Assured works with HTTP methods such as GET(read), POST(create), PUT(update) and DELETE(delete),
+// but as a tester you'll mainly use GET to request response from a server, and POST to create information to a server.
+// Testers mostly read or create data and for that purpose GET and POST is used, PUT and DELETE will only be used when needed.
 
 // Most often used methods from Rest-Asssured library when writing tests:
     // given() --> used to prepare the request
@@ -33,18 +33,18 @@ public class introRestAssured {
     /*
     We have two different parameter types in API:
     Path param --> will be part of url followed by the end of full resource url
-    Ex: https://api.octoperf.com:443/public/users/login/, separated by single / slash
-    Query/Request param  --> is not part of the url and it passed in Key and Value format.
+    Ex: https://api.octoperf.com:443/public/users/login/, separated by single / slash attached to base URL
+    Query/Request param  --> is NOT part of the url and it's passed in Key and Value format right after ?
     Ex: https://api.octoperf.com/public/users/login?password=test12&username=tla.jiraone@gmail.com
-    ? --> means end of url, after that it's (key and value) query parameter.
-    Ex: Query Parameter : password=test12 and username=tla.jiraone@gmail.com, where key is password and value is test12 and so on.
+    ? --> means end of url, after that it's (key and value) query or request parameter.
+    Ex: Query Parameter : password=test12 and username=tla.jiraone@gmail.com, where key is 'password' and value is 'test12' and so on.
      */
 
     /* What is an endpoint?
     An endpoint is a unique URL that represents an object or collections of objects.
     For instance, http://www.google.com/search?source=book
-                  Base URI  / resource ? parameter
-    We can see that search is the endpoint
+                    Base URI/URL       / resource ? parameter
+    We can see that search is the endpoint, it might be called an resource but stick with endpoint
     */
 
     /*Params defined in the POST Request log in with response body token
@@ -86,8 +86,9 @@ public class introRestAssured {
         RestAssured.
                 given().
                 when().post("https://api.octoperf.com/public/users/login?password=test12&username=tla.jiraone@gmail.com").
-                then().assertThat().statusCode(200); // should have returned 201, but 200 it's good for now
-        System.out.println("Test verified, status code is 200 OK");
+                then().
+                assertThat().statusCode(200); // here we're asserting the status code is 200
+        System.out.println("Test verified, status code is 200 OK"); // this prompt is optional to show that this test passed, otherwise it'd an error
     }
 
     /*
@@ -111,5 +112,18 @@ public class introRestAssured {
                 then().assertThat().contentType(ContentType.JSON);
         System.out.println("Test verified, content-type is in application/json format");
 
+    }
+
+    /*
+    Perform a POST request to "https://api.octoperf.com/public/users/login?password=test12&username=tla.jiraone@gmail.com"
+    and verify the status code 200 and response header Content-Type is application/json
+     */
+    @Test
+    public void VerifyStatusCodeAndHeader(){
+        RestAssured.
+                when().
+                post("https://api.octoperf.com/public/users/login?password=test12&username=tla.jiraone@gmail.com").prettyPeek().
+                then().assertThat().statusCode(200).
+                and().header("Content-Type", "application/json"); // header can be checked this way too.
     }
 }

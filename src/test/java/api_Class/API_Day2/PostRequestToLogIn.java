@@ -1,4 +1,4 @@
-package api_Class;
+package api_Class.API_Day2;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -6,8 +6,8 @@ import org.testng.annotations.Test;
 import java.util.HashMap;
 import static io.restassured.RestAssured.given;
 
-/*Today we'll just talk about the different ways that we can log in into our API server such as Map, passing
-parameters using query/request parameter and path parameter, and some methods from RestAssured library.
+/*Today we'll just talk about the different ways that we can log in into our API server with Rest Assured using Map, passing
+parameters using query/request parameter, and some methods from RestAssured library.
  */
 
 
@@ -23,7 +23,7 @@ public class PostRequestToLogIn {
     //FUll URL with Query params: https://api.octoperf.com/public/users/login?password=test12&username=tla.jiraone@gmail.com
     //Query Parameter : password=test12 and username=tla.jiraone@gmail.com, where password is key and test12 is value.
 
-    // using the whole full resource url with request params to log in
+    // using the whole full resource url with query params to log in
     @Test
     public void urlWithQueryParams(){
         RestAssured.given()
@@ -33,11 +33,11 @@ public class PostRequestToLogIn {
     }
 
     // log in with HashMap
-    //HashMap store items in "key and value" pair. You can access them by an index of another type.
-    //One object is used as a key(index) to another object(value). Hashmap can store different type of objects
-    //for instance, String keys and Integer values, or same type like String keys and String values.
+    //HashMap store items in "key and value" pair.
+    //One object is used as a (key) to another object(value). Hashmap can store different type of objects
+    //for instance, we can have String keys and Integer values, or same type like String keys and String values, etc
     @Test
-    public void hashMapQueryParams(){
+    public void hashMapAsParams(){
         RestAssured.baseURI = "https://api.octoperf.com/public/users";
         String path = "/login";
 
@@ -53,9 +53,9 @@ public class PostRequestToLogIn {
     }
 
 
-    // Log in with Query/Request parameter, later on we might log in with path parameter, but the logic is same
+    // Log in with Query/Request parameter
     @Test
-    public void staticQueryParams() {
+    public void LogInWithQueryParams() {
         RestAssured.baseURI = "https://api.octoperf.com/public/users";
         String path = "/login";
         given().contentType(ContentType.JSON) // without class reference
@@ -67,7 +67,7 @@ public class PostRequestToLogIn {
                 .statusCode(200);
     }
 
-    // 1) calling static method from RestAssured Class
+    // 1) calling static method called 'param()' from RestAssured Class
     @Test
     public void logInParam(){
         RestAssured.baseURI = "https://api.octoperf.com/public/users";

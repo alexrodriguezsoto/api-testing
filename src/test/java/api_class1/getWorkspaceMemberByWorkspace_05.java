@@ -21,6 +21,7 @@ public class getWorkspaceMemberByWorkspace_05 {
     public static Response response;
     public static String jsonAsString;
     public static Map<String, String> list;
+    public static Map<String, String> workspaceID;
     List<String> jsonResponse;
 
     @BeforeClass
@@ -50,7 +51,7 @@ public class getWorkspaceMemberByWorkspace_05 {
         //Store in a MAP key value response for the token so it can be used in many requests
         list = new HashMap<String, String>();
         list.put("Authorization", token);
-        System.out.println(list);
+        System.out.println("====>"+list);
         System.out.println("Log in Successfully");
         System.out.println("======== Test Started ========");
     }
@@ -78,7 +79,7 @@ public class getWorkspaceMemberByWorkspace_05 {
         System.out.println(jsonResponse.get(1));
     }
 
-    @Test
+    @Test(dependsOnMethods={"validateResponseBody"})
     public void validateResponseBody2() {
         String workspaceId = jsonResponse.get(1);
         RestAssured.baseURI = "https://api.octoperf.com";
@@ -91,6 +92,44 @@ public class getWorkspaceMemberByWorkspace_05 {
 
         Assert.assertEquals(200, response.statusCode());
         System.out.println(response.prettyPrint());
+
+        JsonPath jsonpathEvaluator = response.jsonPath();
+        String userId = jsonpathEvaluator.get("userId").toString();
+        System.out.println("_---->"+ userId);
+
+        String workSpaceId = jsonpathEvaluator.get("workspaceId").toString();
+        System.out.println("_---->"+ workSpaceId);
+
+        workspaceID = new HashMap<String, String>();
+        workspaceID.put("userId", userId);
+        workspaceID.put("workspaceId", workSpaceId);
+
+        System.out.println("_->"+ workspaceID.get("userId"));
+        System.out.println("_->"+ workspaceID.get("workspaceId"));
+
+
     }
+
+
+    @Test(dependsOnMethods ={"validateResponseBody2"} )
+    public void validatecreateProject() {
+        String requestBody = "{\"id\":\"\",\"created\":\"2021-03-11T06:15:20.845Z\",\"lastModified\":\"2021-03-11T06:15:20.845Z\",\"userId\":\""+workspaceID.get("userId")+"\",\"workspaceId\":\""+workspaceID.get("workspaceId")+"\",\"name\":\"testing22\",\"description\":\"testing\",\"type\":\"DESIGN\",\"tags\":[]}";
+
+        String workspaceId = jsonResponse.get(1);
+        RestAssured.baseURI = "https://api.octoperf.com";
+        response = RestAssured.given()
+                .headers("Content-type", "application/json")
+                .headers("Authorization", "834f9392-ce89-411c-8366-00c86886ec9b")
+                .and()
+                .body(requestBody)
+                .when()
+                .post("/design/projects")
+                .then()
+                .extract().response();
+        System.out.println(response.prettyPrint());
+        System.out.println(response.prettyPeek());
+
+    }
+
 
 }

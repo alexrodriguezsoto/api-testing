@@ -7,29 +7,31 @@ import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class VerifyPostRequests {
+public class CreateProjectInWokspace {
+    //TODO: Student Practice
+
     private String path;
     public static Response response;
     public static String jsonAsString;
-    public static Map<String, String> listToken;
+    public static Map<String, String> list;
     public static Map<String, String> workspaceID;
     List<String> jsonResponse;
 
-    @BeforeClass // runs only once before any test method
-    public void setUp() {
-        RestAssured.baseURI = "https://api.octoperf.com";
-        path = "/public/users/login";
+    @BeforeClass
+    public void setup() {
+        RestAssured.baseURI = "https://api.octoperf.com:443/public/users";
+        path = "/login";
+
 
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("password", "test12");
         map.put("username", "tla.jiraone@gmail.com");
 
-// Interface Response class will allow us to get the response from the request we send to an API server, and Rest-Assured will
-// help us fetch data needed to automate tests. It's better to use Response class when testing to store the response, not required though.
         response = RestAssured.given()
                 .queryParams(map)
                 .when()
@@ -37,59 +39,57 @@ public class VerifyPostRequests {
                 .then()
                 .contentType(ContentType.JSON)
                 .extract().response();
-        // JsonPath is a Rest-Assured library which is used to manipulate json data.
-        // JsonPath is mostly used for validating response body. JsonPath has methods such as getInt(), getString(), etc
+        //JsonPath is an alternative to using XPath for easily getting values from a JSON document
         JsonPath jsonpathEvaluator = response.jsonPath();
         String token = jsonpathEvaluator.get("token").toString();
 
-        // print to help us Visualize TOKEN
-        System.out.println(token); // we can see that this token it's stored as key and value
+        // Help us Visualize TOKEN
+        System.out.println(jsonpathEvaluator.get("token").toString());
 
-        // We'll use HashMap to store the token and use it on many requests
-        listToken = new HashMap<String, String>();
-        listToken.put("Authorization", token);
-        System.out.println(listToken);
+        //Store in a MAP key value response for the token so it can be used in many requests
+        list = new HashMap<String, String>();
+        list.put("Authorization", token);
+        System.out.println("====>"+list);
         System.out.println("Log in Successfully");
-        System.out.println("======== Start Testing ========");
+        System.out.println("======== Test Started ========");
     }
-
 
     @Test
     public void validateResponseBody() {
         RestAssured.baseURI = "https://api.octoperf.com";
         response = RestAssured.given()
-                .headers(listToken) // because it asks for the token
+                .headers(list)
                 .when()
-                .get("/workspaces/member-of")// path to default workspace by making a get request
+                .get("/workspaces/member-of")
                 .then()
                 .extract().response();
-// validate using TestNG Assert class and JsonPath's getString() method to verify body
+
         Assert.assertEquals(200, response.statusCode());
-        Assert.assertEquals("Wkt3tHgB6T29TqnSuTha", response.jsonPath().getString("id[0]"));
         Assert.assertEquals("Default", response.jsonPath().getString("name[0]"));
+        Assert.assertEquals("Wkt3tHgB6T29TqnSuTha", response.jsonPath().getString("id[0]"));
         Assert.assertEquals("1kt3tHgB6T29TqnSCje3", response.jsonPath().getString("userId[0]"));
 
         String company = response.jsonPath().getString("id");
         System.out.println(company);
 
         //we have 1 array with 2 Json response body
-//        jsonResponse = response.jsonPath().getList("id");
-//        System.out.println(jsonResponse.get(1));
+        jsonResponse = response.jsonPath().getList("id");
+        System.out.println(jsonResponse.get(1));
     }
 
     @Test(dependsOnMethods={"validateResponseBody"})
     public void validateResponseBody2() {
-        String workspaceId = jsonResponse.get(1); // to access AdminAccess object
+        String workspaceId = jsonResponse.get(1);
         RestAssured.baseURI = "https://api.octoperf.com";
         response = RestAssured.given()
-                .headers(listToken)
+                .headers(list)
                 .when()
-                .get("/workspaces/members/by-workspace/" + workspaceId)
+                .get("workspaces/members/by-workspace/"+workspaceId)
                 .then()
                 .extract().response();
 
         Assert.assertEquals(200, response.statusCode());
-        System.out.println(response.prettyPrint()); // [Wkt3tHgB6T29TqnSuTha]
+        System.out.println(response.prettyPrint());
 
         JsonPath jsonpathEvaluator = response.jsonPath();
         String userId = jsonpathEvaluator.get("userId").toString();
@@ -104,6 +104,7 @@ public class VerifyPostRequests {
 
         System.out.println("_->"+ workspaceID.get("userId"));
         System.out.println("_->"+ workspaceID.get("workspaceId"));
+
 
     }
 

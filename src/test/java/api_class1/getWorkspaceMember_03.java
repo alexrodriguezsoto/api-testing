@@ -63,8 +63,7 @@ public class getWorkspaceMember_03 {
         RestAssured.baseURI = "https://api.octoperf.com";
         RestAssured.given()
                 .headers(list)
-                .when()
-                .get("/workspaces/member-of").prettyPrint();
+                .when().log().body().get("/workspaces/member-of").prettyPrint();
 //                .then()
 //                .assertThat().statusCode(200);
         System.out.println("verified Status code 200 successful");

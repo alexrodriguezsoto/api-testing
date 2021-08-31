@@ -18,14 +18,13 @@ public class VerifyMemberResponses {
 
     //TODO: Student Practice
 
-    private String path;
+    public String path;
     public static Response response;
     public static Map<String, String> workspaceID;
-    String defaultId;
-    String  userId;
-    String workspaceId;
-    String id2;
-
+    public String defaultId;
+    public String userId;
+    public String workspaceId;
+    public String id2;
 
     @BeforeClass
     public String setUpLogInAndToken() { // this method includes BaseURI, path, username, password, and token
@@ -62,7 +61,7 @@ public class VerifyMemberResponses {
                 .get("/workspaces/member-of")
                 .then().log().all()
                 .extract().response();
-// verifying using TestNG Assert class and jsonPath's getStrin() method to verify body
+// verifying using TestNG Assert class and jsonPath's getString() method to verify body
         Assert.assertEquals(200, response.statusCode());
         Assert.assertEquals("Default", response.jsonPath().getString("name[0]"));
         Assert.assertEquals("Wkt3tHgB6T29TqnSuTha", response.jsonPath().getString("id[0]"));
@@ -73,14 +72,14 @@ public class VerifyMemberResponses {
         defaultId = response.jsonPath().get("id[0]"); // Wkt3tHgB6T29TqnSuTha
     }
 
-    // Verify AdminAccess member's status code
+    // Verify AdminAccess member's status code, userId, and workspaceId
     @Test(dependsOnMethods={"verifyDefaultMember"})
     public void verifyAdminMember() {
 
         response = RestAssured.given()
                 .header("Authorization",  setUpLogInAndToken())
                 .when()
-                .get("workspaces/members/by-workspace/"+defaultId); // we're saying use the id from default workspace
+                .get("workspaces/members/by-workspace/"+defaultId); // use the id from default to access into Admin
 
         Assert.assertEquals(200, response.statusCode());
 
@@ -91,9 +90,10 @@ public class VerifyMemberResponses {
         workspaceId = response.jsonPath().get("workspaceId[0]");
         assertThat(workspaceId, is("Wkt3tHgB6T29TqnSuTha"));
 
+        // Store Admin's userId and workspaceId into a hashmap which we'll use in order to crate a project
         workspaceID = new HashMap<String, String>();
         workspaceID.put("userId", userId);
-        workspaceID.put("workspaceId", defaultId);
+        workspaceID.put("workspaceId", workspaceId);
     }
 
     // create project
@@ -101,9 +101,7 @@ public class VerifyMemberResponses {
     public void createProject() {
         String requestBody = "{\"id\":\"\",\"created\":\"2021-03-11T06:15:20.845Z\",\"lastModified\":\"2021-03-11T06:15:20.845Z\",\"userId\":\"" + workspaceID.get("userId") + "\",\"workspaceId\":\"" + workspaceID.get("workspaceId") + "\",\"name\":\"testing22\",\"description\":\"testing\",\"type\":\"DESIGN\",\"tags\":[]}";
 
-        // System.out.println(requestBody);
-        RestAssured.baseURI = "https://api.octoperf.com";
-        response = RestAssured.given()
+        response = RestAssured.given().baseUri(RestAssured.baseURI)
                 .headers("Content-type", "application/json")
                 .header("Authorization", setUpLogInAndToken())
                 .and()
@@ -112,46 +110,42 @@ public class VerifyMemberResponses {
                 .post("/design/projects")
                 .then()
                 .extract().response();
-        System.out.println(response.prettyPrint());
-        System.out.println(response.getStatusLine());
+//        System.out.println(response.prettyPrint());
+//        System.out.println(response.getStatusLine());
 
         id2 = response.jsonPath().get("id");
-        System.out.println("This is the new member id created when making a post request ===> " + id2);
-    }
+        System.out.println("This is the newly member id created when making a post request ===> " + id2);
 
-        // Verify created member's response body
-        public void verifyCreatedMember(){
-            Map<String, String> hashmap = new HashMap<String, String>();
-            hashmap.put("id", "");
-            hashmap.put("created", "2021-03-11T06:15:20.845Z");
-            hashmap.put("lastModified", "2021-03-11T06:15:20.845Z");
-            hashmap.put("userId", workspaceID.get("userId"));
-            hashmap.put("workspaceId", workspaceID.get("workspaceId"));
-            hashmap.put("name", "createNew");
-            hashmap.put("description", "new Dataset");
-            hashmap.put("type", "DESIGN");
-            hashmap.put("tags", "");
-
-        RestAssured.baseURI = "https://api.octoperf.com";
-        response = RestAssured.
-                given().
-                body(hashmap).
-                when().
-                post("/design/projects").
-                prettyPeek();
+        // Verify project's created response body
+//            Map<String, String> hashmap = new HashMap<String, String>();
+//            hashmap.put("id", "");
+//            hashmap.put("created", "2021-03-11T06:15:20.845Z");
+//            hashmap.put("lastModified", "2021-03-11T06:15:20.845Z");
+//            hashmap.put("userId", workspaceID.get("userId"));
+//            hashmap.put("workspaceId", workspaceID.get("workspaceId"));
+//            hashmap.put("name", "createNew");
+//            hashmap.put("description", "new Dataset");
+//            hashmap.put("type", "DESIGN");
+//            hashmap.put("tags", "");
+//
+//        response = RestAssured.
+//                given().
+//                body(hashmap).
+//                when().
+//                post("/design/projects").
+//                prettyPeek();
         Assert.assertEquals(201, response.statusCode());
-        assertThat("name", is("createNew"));
-        assertThat("DESIGN", is("type"));
-        assertThat("tags", is(""));
+//        assertThat("createNew", is("name"));
+//        assertThat("type", is("DESIGN"));
+//        assertThat("tags", is(""));
     }
 
     // update created project
     @Test(dependsOnMethods ={"createProject"} )
     public void updateProjectsName() {
         String requestBody = "{\"created\":1615443320845,\"description\":\"testing\",\"id\":\""+id2+"\",\"lastModified\":1629860121757,\"name\":\"testing Soto\",\"tags\":[],\"type\":\"DESIGN\",\"userId\":\"1kt3tHgB6T29TqnSCje3\",\"workspaceId\":\"Wkt3tHgB6T29TqnSuTha\"}";
-        //System.out.println(requestBody);
-        RestAssured.baseURI = "https://api.octoperf.com";
-        response = RestAssured.given()
+
+        response = RestAssured.given().baseUri(RestAssured.baseURI )
                 .headers("Content-type", "application/json")
                 .header("Authorization",  setUpLogInAndToken())
                 .and()
@@ -167,8 +161,8 @@ public class VerifyMemberResponses {
     // delete created project
     @Test(dependsOnMethods ={"updateProjectsName"} )
     public void deleteProject() {
-        RestAssured.baseURI = "https://api.octoperf.com";
         response = RestAssured.given()
+                .baseUri(RestAssured.baseURI )
                 .header("Authorization",  setUpLogInAndToken())
                 .when()
                 .delete("/design/projects/"+id2)

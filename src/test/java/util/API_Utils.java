@@ -12,13 +12,14 @@ import java.util.Map;
 import static org.apache.http.HttpStatus.SC_OK;
 
 public class API_Utils {
-    private String path;
+    public String path;
     public static Response response;
     public static Map<String, String> workspaceID;
-    public List<String> jsonResponse;
-    public String workSpaceId;
+    public String defaultId;
     public String userId;
+    public String workspaceId;
     public String id2;
+
 
     @BeforeClass
     public String setUpLogInAndToken() { // this method includes BaseURI, path, username, password, and token

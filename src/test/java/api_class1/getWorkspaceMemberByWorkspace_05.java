@@ -12,8 +12,7 @@ import static org.apache.http.HttpStatus.SC_OK;
 import java.util.*;
 
 import org.json.JSONObject;
-import io.restassured.response.ResponseOptions;
-import util.utilities;
+import util.ConfigurationReader;
 
 public class getWorkspaceMemberByWorkspace_05 {
 
@@ -33,12 +32,18 @@ public class getWorkspaceMemberByWorkspace_05 {
 String  userId;
     String id4;
     String b;
-
+    ConfigurationReader a = new ConfigurationReader();
 
     @BeforeClass
     public String setUpLogIn() {
         RestAssured.baseURI = "https://api.octoperf.com:443/public/users";
+//        RestAssured.baseURI = a.getProperty("url");
         path = "/login";
+
+
+
+
+
 
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("password", "test12");

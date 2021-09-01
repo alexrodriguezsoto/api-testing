@@ -14,13 +14,13 @@ also verify the response we get after we log in
  */
 
 
-public class LogInAndVerifyResponse {
+public class LogInAndVerifyResponse1 {
 
     // After making a POST request to log in, the website asks for a token that we'll get from Postman to gain access.
     // FULL URL : https://api.octoperf.com/public/users/login
     // base url : https://api.octoperf.com
     // endpoint : /public/users//login
-    // FUll URL with Query params: https://api.octoperf.com/public/users/login?password=test12&username=tla.jiraone@gmail.com
+    // FUll URL with Query params: https://a10pi.octoperf.com/public/users/login?password=test12&username=tla.jiraone@gmail.com
     // Query Parameter : password=test12 and username=tla.jiraone@gmail.com, where password is key and test12 is value.
 
     // log in using the whole full resource url with query params and verify status code 200, content_Type is Json format

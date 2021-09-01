@@ -2,31 +2,22 @@ package util;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
-
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
 import static org.apache.http.HttpStatus.SC_OK;
+
 
 public class API_Utils {
     public String path;
-    public static Response response;
-    public static Map<String, String> workspaceID;
-    public String defaultId;
-    public String userId;
-    public String workspaceId;
-    public String id2;
 
 
     @BeforeClass
     public String setUpLogInAndToken() { // this method includes BaseURI, path, username, password, and token
-        RestAssured.baseURI = "https://api.octoperf.com";
-        path = "/public/users/login";
+       RestAssured.baseURI = ConfigurationReader.getProperty("url");
+        path = ConfigurationReader.getProperty("loginPath");
 
-        HashMap<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<String, Object>();
         map.put("password", "test12");
         map.put("username", "tla.jiraone@gmail.com");
 

@@ -113,31 +113,14 @@ public class VerifyMemberResponses {
 //        System.out.println(response.prettyPrint());
 //        System.out.println(response.getStatusLine());
 
+        System.out.println(response.prettyPrint());
         id2 = response.jsonPath().get("id");
         System.out.println("This is the newly member id created when making a post request ===> " + id2);
 
-        // Verify project's created response body
-//            Map<String, String> hashmap = new HashMap<String, String>();
-//            hashmap.put("id", "");
-//            hashmap.put("created", "2021-03-11T06:15:20.845Z");
-//            hashmap.put("lastModified", "2021-03-11T06:15:20.845Z");
-//            hashmap.put("userId", workspaceID.get("userId"));
-//            hashmap.put("workspaceId", workspaceID.get("workspaceId"));
-//            hashmap.put("name", "createNew");
-//            hashmap.put("description", "new Dataset");
-//            hashmap.put("type", "DESIGN");
-//            hashmap.put("tags", "");
-//
-//        response = RestAssured.
-//                given().
-//                body(hashmap).
-//                when().
-//                post("/design/projects").
-//                prettyPeek();
         Assert.assertEquals(201, response.statusCode());
-//        assertThat("createNew", is("name"));
-//        assertThat("type", is("DESIGN"));
-//        assertThat("tags", is(""));
+//        Assert name, type,userId,workspaceId using Hamcrest
+        assertThat(response.jsonPath().getString("type"), is("DESIGN"));
+        assertThat(response.jsonPath().getString("name"), is("testing22"));
     }
 
     // update created project

@@ -2,10 +2,7 @@ package api_Class.API_Day1;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-
-import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,7 +11,8 @@ Hamcrest library provides matchers which are simply assertion methods, that's wh
 hamcrest's assertions in tests. Hamcrest works with both JUnit and TestNG.
  */
 public class HamcrestMatchersExample {
-// any hamcrest assertions that is not correct will fail.
+// any hamcrest's matchers assertions that is not correct will fail.
+
     @Test
     public void test() {
 

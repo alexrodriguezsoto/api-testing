@@ -19,11 +19,11 @@ public class LogInAndVerifyResponse1 {
     // After making a POST request to log in, the website asks for a token that we'll get from Postman to gain access.
     // FULL URL : https://api.octoperf.com/public/users/login
     // base url : https://api.octoperf.com
-    // endpoint : /public/users//login
-    // FUll URL with Query params: https://a10pi.octoperf.com/public/users/login?password=test12&username=tla.jiraone@gmail.com
-    // Query Parameter : password=test12 and username=tla.jiraone@gmail.com, where password is key and test12 is value.
+    // FULL URL with Query params: https://a10pi.octoperf.com/public/users/login?password=test12&username=tla.jiraone@gmail.com
 
-    // log in using the whole full resource url with query params and verify status code 200, content_Type is Json format
+    /* log in with Full url with query params,
+    and verify status code is 200, content_Type is Json format
+     */
     @Test
     public void fullUrlWithQueryParams(){
         RestAssured.given()
@@ -32,11 +32,11 @@ public class LogInAndVerifyResponse1 {
                 .then().assertThat().statusCode(200).and().assertThat().contentType(ContentType.JSON);
     }
 
-    // log in with Map and verify content-Type is application/json
+    // log in using Map and verify content-Type is application/json
     // Map store items in "key and value" pair. Hashmap implements Map, and can store different type of objects
     // for instance, we can have String keys and Integer values, or same type like String keys and String values, etc
     @Test
-    public void hashMapAsParams(){
+    public void LogInWithMap(){
         RestAssured.baseURI = "https://api.octoperf.com";
         String path = "/public/users/login";
 
@@ -48,18 +48,20 @@ public class LogInAndVerifyResponse1 {
                 .queryParams(map) //here using queryParams() method because it uses key and value
                 .when()
                 .post(path)
-                .then().log().headers(). // using to see response header on IntelliJ, you don't have to
+                .then().log().headers(). // log().headers() --> used to print the response's header
                 assertThat().contentType("application/json");
     }
 
 
     // Log in with Query parameters and verify response status code 200 OK and
-    // print body shows token in json format
+    // print response body
     @Test
     public void LogInWithQueryParams() {
         RestAssured.baseURI = "https://api.octoperf.com";
         String path = "/public/users/login";
-        given().contentType(ContentType.JSON) // without class reference
+
+        // without class reference
+        given().contentType(ContentType.JSON)
                 .queryParam("username","tla.jiraone@gmail.com")
                 .queryParam("password", "test12")
                 .when()
@@ -74,6 +76,7 @@ public class LogInAndVerifyResponse1 {
     public void logInParam(){
         RestAssured.baseURI = "https://api.octoperf.com";
         String path = "/public/users/login";
+
         RestAssured.given()
                 .param("username", "tla.jiraone@gmail.com")
                 .param("password", "test12")
@@ -83,13 +86,14 @@ public class LogInAndVerifyResponse1 {
     }
 
     /* 2) calling static method from RestAssured Class
-    We can pass multiple parameters in same method usin queryParams() method, and
+    We can pass multiple parameters in same method using queryParams() method, and
     verify status code is 200 and header content-Type is in json format
      */
     @Test
     public void multiplelineQueryParams() {
-        RestAssured.baseURI = "https://api.octoperf.com/public/users";
-        String path = "/login";
+        RestAssured.baseURI = "https://api.octoperf.coms";
+        String path = "/public/user/login";
+
         RestAssured.given()
                 .queryParams("password", "test12", "username", "tla.jiraone@gmail.com") // multiple params
                 .when()

@@ -12,7 +12,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 
-public class VerifyMemberResponsesWIthUtil {
+public class VerifyMemberResponsesWithUtil {
+
     API_Utils uses = new API_Utils();
     public static Response response;
     public String defaultId;
@@ -24,10 +25,12 @@ public class VerifyMemberResponsesWIthUtil {
 
     @Test
     public void verifyDefaultMember() {
+        uses.setUpLogIn(); // contains the baseURI
+
         response = RestAssured.given()
-                .header("Authorization", uses.setUpLogInAndToken() )
+                .header("Authorization", uses.octoperfToken )
                 .when()
-                .get(ConfigurationReader.getProperty("url")+ConfigurationReader.getProperty("defaultPath"))
+                .get(ConfigurationReader.getProperty("defaultPath"))
                 .then().log().all()
                 .extract().response();
 // verifying using TestNG Assert class and jsonPath's getString() method to verify body
@@ -41,11 +44,10 @@ public class VerifyMemberResponsesWIthUtil {
         defaultId = response.jsonPath().get("id[0]"); // Wkt3tHgB6T29TqnSuTha
     }
 
-    @Test(dependsOnMethods = {"verifyDefaultMember"})
+    @Test(dependsOnMethods = {"verifyDefaultMember"}) // since this is dependent, it'll fetch the baseURI from above, just add path
     public void verifyAdminMember() {
-        RestAssured.baseURI = "https://api.octoperf.com";
         response = RestAssured.given()
-                .header("Authorization", uses.setUpLogInAndToken())
+                .header("Authorization", uses.octoperfToken)
                 .when()
                 .get(ConfigurationReader.getProperty("adminPath") + defaultId)
                 .then()
@@ -66,14 +68,13 @@ public class VerifyMemberResponsesWIthUtil {
 
     @Test(dependsOnMethods = {"verifyAdminMember"})
     public void createProject() {
-        String requestBody = "{\"id\":\"\",\"created\":\"2021-03-11T06:15:20.845Z\",\"lastModified\":\"2021-03-11T06:15:20.845Z\",\"userId\":\"" + workspaceID.get("userId") + "\",\"workspaceId\":\"" + workspaceID.get("workspaceId") + "\",\"name\":\"testing22\",\"description\":\"testing\",\"type\":\"DESIGN\",\"tags\":[]}";
+        String createBody = "{\"id\":\"\",\"created\":\"2021-03-11T06:15:20.845Z\",\"lastModified\":\"2021-03-11T06:15:20.845Z\",\"userId\":\"" + workspaceID.get("userId") + "\",\"workspaceId\":\"" + workspaceID.get("workspaceId") + "\",\"name\":\"testing22\",\"description\":\"testing\",\"type\":\"DESIGN\",\"tags\":[]}";
 
         response = RestAssured.given()
-                .baseUri(RestAssured.baseURI)
                 .headers("Content-type", "application/json")
-                .header("Authorization", uses.setUpLogInAndToken())
+                .header("Authorization", uses.octoperfToken)
                 .and()
-                .body(requestBody)
+                .body(createBody)
                 .when()
                 .post("/design/projects")
                 .then()
@@ -88,14 +89,13 @@ public class VerifyMemberResponsesWIthUtil {
 
     @Test(dependsOnMethods = {"createProject"})
     public void updateProjectsName() {
-        String requestBody = "{\"created\":1615443320845,\"description\":\"testing\",\"id\":\"" + id2 + "\",\"lastModified\":1629860121757,\"name\":\"testing Soto\",\"tags\":[],\"type\":\"DESIGN\",\"userId\":\"1kt3tHgB6T29TqnSCje3\",\"workspaceId\":\"Wkt3tHgB6T29TqnSuTha\"}";
+        String updateBody = "{\"created\":1615443320845,\"description\":\"testing\",\"id\":\"" + id2 + "\",\"lastModified\":1629860121757,\"name\":\"testing Soto\",\"tags\":[],\"type\":\"DESIGN\",\"userId\":\"1kt3tHgB6T29TqnSCje3\",\"workspaceId\":\"Wkt3tHgB6T29TqnSuTha\"}";
 
         response = RestAssured.given()
-                .baseUri(RestAssured.baseURI)
                 .headers("Content-type", "application/json")
-                .header("Authorization", uses.setUpLogInAndToken())
+                .header("Authorization", uses.octoperfToken)
                 .and()
-                .body(requestBody)
+                .body(updateBody)
                 .when()
                 .put("/design/projects/" + id2)
                 .then()
@@ -107,8 +107,7 @@ public class VerifyMemberResponsesWIthUtil {
     @Test(dependsOnMethods = {"updateProjectsName"})
     public void deleteProject() {
         response = RestAssured.given()
-                .baseUri(RestAssured.baseURI)
-                .header("Authorization", uses.setUpLogInAndToken())
+                .header("Authorization", uses.octoperfToken)
                 .when()
                 .delete("/design/projects/" + id2)
                 .then()

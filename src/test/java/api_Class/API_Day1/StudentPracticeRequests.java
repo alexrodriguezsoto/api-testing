@@ -16,6 +16,7 @@ public class StudentPracticeRequests {
     private final String API_KEY = "special-key";
     Response response;
 
+
     @BeforeClass
     public void setUp() {
         baseURI = "https://petstore.swagger.io/v2"; // This is base URI, just add the endpoint/resource
@@ -27,6 +28,9 @@ public class StudentPracticeRequests {
     // when() --> submit request
     // get --> send the request to given url
     // asString() --> returns the body as a single string
+
+
+    //TODO: Student Practice
 
 
     /*

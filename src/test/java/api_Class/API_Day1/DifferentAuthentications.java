@@ -8,8 +8,8 @@ public class DifferentAuthentications {
     @Test
     public void usingApiKey(){ //I got this API key long time ago, you don't have to get it, this is just an example of api key.
         RestAssured.given().log().all().
-                queryParam("t", "Kung Fury").
-                queryParam("apikey", "a9faab96").
+                queryParam("t", "Kung Fury"). // t is used to search for a movie, go to the url for more info
+                queryParam("apikey", "a9faab96"). // where key = apikey, value = a9faab96
                 when().get("http://www.omdbapi.com/").
                 then().log().all().assertThat().statusCode(200);
     }
@@ -33,7 +33,7 @@ public class DifferentAuthentications {
                 then().assertThat().statusCode(200);
     }
 
-    // This is not an authentication exmaple, it's just to show what an XML body looks like
+    // This is not an authentication example, it's just to show what an XML body looks like
     @Test
     public void xmlResponse(){
         RestAssured.get("http://parabank.parasoft.com/parabank/services/bank/customers/12212/").

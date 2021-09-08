@@ -13,8 +13,10 @@ public class usingJsonPathWithJsonObject {
                 "  \"firstName\": \"James\",\r\n" +
                 "  \"lastName\": \"Bond\"\r\n" +
                 "}";
-         // Get JsonPath instance of above JSON string
+
+         // Get JsonPath instance from above JSON string
         JsonPath jsonPath = JsonPath.from(jsonString);
+
          // json's firstName, lastName holds a string value
          // therefore we'll use getString() method from JsonPath.
         String firstName = jsonPath.getString("firstName");

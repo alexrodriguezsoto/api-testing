@@ -5,9 +5,10 @@ import io.restassured.http.ContentType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-//Logs display information from the response when requesting info from an API server
+// Logs display information from the request and response when making calls to an API server.
+// Logs help to visualize what you want to see.
 /*
-Request logging
+Request logging --> used after given()
 - given().log().all() --> logs all request specification details including parameters, headers and body
 - given().log().params() --> log only the parameters of the request
 - given().log().body() --> log only the request body
@@ -16,7 +17,7 @@ Request logging
 - given().log().method() --> log only the request method
 - given().log().path() --> log only the request path
 
-Response Logging
+Response Logging --> used after then()
 - get("/x".then().log().body
 - get("/x".then().log().ifError
 - get("/x".then().log().all()
@@ -26,9 +27,9 @@ Response Logging
 - get("/x".then().log().ifStatusCodeisEqualTo(200) --> log only if the status code is equal to 200
  */
 
-public class getRequestsWithLogs {
+public class LogsExamples {
 
-// Request logging examples
+// ***** Request logging examples
 
     @Test
     public void testingLogs1() {
@@ -53,14 +54,14 @@ public class getRequestsWithLogs {
     }
 
 
-// Response Logging examples
+// ****** Response Logging examples
 
-    // Log fail, in this example we want to validate that the status is 200, only if this fails, the request will be logged
+    // Log fail, in this example we want to validate that the status is 200, if not log will fail
     @Test
     public void logFail(){
         RestAssured.
                 when().get("https://api.octoperf.com").
-                then().log().ifValidationFails().statusCode(204); // will log because validation status code is not 200
+                then().log().ifValidationFails().statusCode(204); // will fail because validation status code is not 200
             // then().log().ifValidationFails().statusCode(200);
     }
 

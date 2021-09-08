@@ -9,7 +9,6 @@ import org.testng.annotations.Test;
 import java.util.HashMap;
 import java.util.Map;
 import static org.hamcrest.MatcherAssert.assertThat;
-
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.hamcrest.Matchers.is;
 
@@ -39,7 +38,6 @@ public class VerifyMemberResponses {
                 .queryParams(map)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
-                .baseUri(RestAssured.baseURI)
                 .post(path)
                 .then()
                 .statusCode(SC_OK)
@@ -61,7 +59,8 @@ public class VerifyMemberResponses {
                 .get("/workspaces/member-of")
                 .then().log().all()
                 .extract().response();
-// verifying using TestNG Assert class and jsonPath's getString() method to verify body
+
+// verifying using TestNG's Assert class and jsonPath's getString() method to verify body
         Assert.assertEquals(200, response.statusCode());
         Assert.assertEquals("Default", response.jsonPath().getString("name[0]"));
         Assert.assertEquals("Wkt3tHgB6T29TqnSuTha", response.jsonPath().getString("id[0]"));
@@ -83,7 +82,7 @@ public class VerifyMemberResponses {
 
         Assert.assertEquals(200, response.statusCode());
 
-        // Now, we'll be using assertThat() method from hamcrest Matchers class to verify our test
+        // Now, we'll be using assertThat() method from hamcrest Matchers to verify our response body
         userId = response.jsonPath().get("userId[0]");
         assertThat(userId, is("1kt3tHgB6T29TqnSCje3"));
 
@@ -96,29 +95,30 @@ public class VerifyMemberResponses {
         workspaceID.put("workspaceId", workspaceId);
     }
 
+// Octoperf's Swagger documentation will show you how to use endpoints for creating, updating, delete
+
     // create project
     @Test(dependsOnMethods={"verifyAdminMember"})
     public void createProject() {
-        String requestBody = "{\"id\":\"\",\"created\":\"2021-03-11T06:15:20.845Z\",\"lastModified\":\"2021-03-11T06:15:20.845Z\",\"userId\":\"" + workspaceID.get("userId") + "\",\"workspaceId\":\"" + workspaceID.get("workspaceId") + "\",\"name\":\"testing22\",\"description\":\"testing\",\"type\":\"DESIGN\",\"tags\":[]}";
+        String requestBody1 = "{\"id\":\"\",\"created\":\"2021-03-11T06:15:20.845Z\",\"lastModified\":\"2021-03-11T06:15:20.845Z\",\"userId\":\"" + workspaceID.get("userId") + "\",\"workspaceId\":\"" + workspaceID.get("workspaceId") + "\",\"name\":\"testing22\",\"description\":\"testing\",\"type\":\"DESIGN\",\"tags\":[]}";
 
-        response = RestAssured.given().baseUri(RestAssured.baseURI)
+        response = RestAssured.given()
                 .headers("Content-type", "application/json")
                 .header("Authorization", setUpLogInAndToken())
                 .and()
-                .body(requestBody)
+                .body(requestBody1)
                 .when()
                 .post("/design/projects")
                 .then()
                 .extract().response();
-//        System.out.println(response.prettyPrint());
-//        System.out.println(response.getStatusLine());
 
         System.out.println(response.prettyPrint());
         id2 = response.jsonPath().get("id");
-        System.out.println("This is the newly member id created when making a post request ===> " + id2);
+        System.out.println("This is the new id created when making a post request ===> " + id2); // id2 will be used for updating project
 
         Assert.assertEquals(201, response.statusCode());
-//        Assert name, type,userId,workspaceId using Hamcrest
+
+        // Assert name, type using matchers from hamcrest along with JsonPath
         assertThat(response.jsonPath().getString("type"), is("DESIGN"));
         assertThat(response.jsonPath().getString("name"), is("testing22"));
     }
@@ -126,33 +126,30 @@ public class VerifyMemberResponses {
     // update created project
     @Test(dependsOnMethods ={"createProject"} )
     public void updateProjectsName() {
-        String requestBody = "{\"created\":1615443320845,\"description\":\"testing\",\"id\":\""+id2+"\",\"lastModified\":1629860121757,\"name\":\"testing Soto\",\"tags\":[],\"type\":\"DESIGN\",\"userId\":\"1kt3tHgB6T29TqnSCje3\",\"workspaceId\":\"Wkt3tHgB6T29TqnSuTha\"}";
+        String requestBody2 = "{\"created\":1615443320845,\"description\":\"testing\",\"id\":\""+id2+"\",\"lastModified\":1629860121757,\"name\":\"testing Soto\",\"tags\":[],\"type\":\"DESIGN\",\"userId\":\"1kt3tHgB6T29TqnSCje3\",\"workspaceId\":\"Wkt3tHgB6T29TqnSuTha\"}";
 
-        response = RestAssured.given().baseUri(RestAssured.baseURI )
+        response = RestAssured.given()
                 .headers("Content-type", "application/json")
                 .header("Authorization",  setUpLogInAndToken())
                 .and()
-                .body(requestBody)
+                .body(requestBody2)
                 .when()
                 .put("/design/projects/"+id2)
                 .then()
                 .extract().response();
         System.out.println(response.prettyPrint());
-        System.out.println(response.getStatusLine());
     }
 
     // delete created project
     @Test(dependsOnMethods ={"updateProjectsName"} )
     public void deleteProject() {
         response = RestAssured.given()
-                .baseUri(RestAssured.baseURI )
                 .header("Authorization",  setUpLogInAndToken())
                 .when()
                 .delete("/design/projects/"+id2)
                 .then()
                 .extract().response();
         Assert.assertEquals(204, response.statusCode());
-        System.out.println(response.prettyPrint());
         System.out.println(response.getStatusLine());
     }
 }

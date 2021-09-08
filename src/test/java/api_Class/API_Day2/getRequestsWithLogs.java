@@ -55,13 +55,13 @@ public class getRequestsWithLogs {
 
 // Response Logging examples
 
-    // Log fail
+    // Log fail, in this example we want to validate that the status is 200, only if this fails, the request will be logged
     @Test
     public void logFail(){
         RestAssured.
                 when().get("https://api.octoperf.com").
-                then().log().ifValidationFails().statusCode(204); // will fail because validation status code is not 200
-            // then().log().ifValidationFails().statusCode(200); // test will passed because validation log is correct 200
+                then().log().ifValidationFails().statusCode(204); // will log because validation status code is not 200
+            // then().log().ifValidationFails().statusCode(200);
     }
 
     // log if status code is equal 200

@@ -1,0 +1,18 @@
+{
+  "id": 100111,
+  "category": {
+    "id": 100111,
+    "name": "terrier"
+  },
+  "name": "lula",
+  "photoUrls": [
+    "string"
+  ],
+  "tags": [
+    {
+      "id": 0,
+      "name": "string"
+    }
+  ],
+  "status": "available"
+}

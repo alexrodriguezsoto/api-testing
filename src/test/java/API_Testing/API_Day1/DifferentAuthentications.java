@@ -1,4 +1,4 @@
-package api_Class.API_Day1;
+package API_Testing.API_Day1;
 
 import io.restassured.RestAssured;
 import org.testng.annotations.Test;

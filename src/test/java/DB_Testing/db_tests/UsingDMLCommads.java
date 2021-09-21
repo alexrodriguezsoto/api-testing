@@ -2,7 +2,7 @@ package DB_Testing.db_tests;
 
 import org.testng.annotations.Test;
 import util.DBUtility;
-import util.Database;
+import util.DBType;
 
 import java.sql.*;
 import java.util.List;
@@ -28,7 +28,7 @@ public class UsingDMLCommads {
                     "jdbc:postgresql://localhost:5432/demoHR",
                     "postgres", "");
 
-            System.out.println("Database Connected ..");
+            System.out.println("DBType Connected ..");
 
             stmt = connection.createStatement();
             CreateSql = "Create Table students(id int primary key, first_name varchar, last_name varchar, address text)";
@@ -44,7 +44,7 @@ public class UsingDMLCommads {
 
     private static void InsertToDB() {
         try {
-            // create a mysql Database connection
+            // create a mysql DBType connection
             String myUrl = "jdbc:postgresql://localhost:5432/demoHR";
             Class.forName("org.postgresql.Driver");
             Connection conn = DriverManager.getConnection(myUrl, "postgres", "");
@@ -111,7 +111,7 @@ public class UsingDMLCommads {
     // Delete Table from database -- Example
     @Test
     public void test7() throws SQLException {
-        DBUtility.establishConnection(Database.POSTGRESQL, "demoHR");
+        DBUtility.establishConnection(DBType.POSTGRESQL);
 
         List<Map<String, Object>> empData = DBUtility.getQueryResults("DROP TABLE students");
         System.out.println(empData);

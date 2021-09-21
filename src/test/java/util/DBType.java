@@ -1,5 +1,5 @@
 package util;
 
-public enum Database {
+public enum DBType {
     POSTGRESQL, ORACLE, MYSQL, MONGO
 }

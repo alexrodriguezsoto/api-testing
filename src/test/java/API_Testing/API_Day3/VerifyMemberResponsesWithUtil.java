@@ -4,7 +4,7 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import util.API_Utils;
+import util.API_Utility;
 import util.ConfigurationReader;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.is;
 
 public class VerifyMemberResponsesWithUtil {
 
-    API_Utils uses = new API_Utils();
+    API_Utility uses = new API_Utility();
     public static Response response;
     public String defaultId;
     public String userId;

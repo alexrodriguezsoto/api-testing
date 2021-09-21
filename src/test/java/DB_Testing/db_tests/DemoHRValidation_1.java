@@ -4,19 +4,20 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import util.DBType;
 import util.DBUtility;
-import util.Database;
 
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-public class DemoHRValidation {
+public class DemoHRValidation_1 {
 
     @BeforeClass
     public void setUp(){
-        DBUtility.establishConnection(Database.POSTGRESQL, "demoHR");
+        DBUtility.establishConnection(DBType.POSTGRESQL);
     }
 
     @AfterClass
@@ -24,12 +25,14 @@ public class DemoHRValidation {
         DBUtility.closeConnections();
     }
 
-    @Test
+
+    @Test(description = "verify total number of employees is 300024")
     public void assertDB() throws SQLException {
-        DBUtility.getRowsCount("select * from employees");
+       int result = DBUtility.getRowsCount("select * from employees");
+       Assert.assertEquals(result, 300024  );
     }
 
-    @Test
+    @Test(description = "verify ")
     public void assertDB2(){
         List<Map<String, Object>> empData  =DBUtility.getQueryResults("select * from titles limit 10");
 

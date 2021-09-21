@@ -34,7 +34,7 @@ public class PostgreS {
 
     @Test
     public void countTest() throws SQLException {
-        // Stablish a Database Connection
+        // Stablish a DBType Connection
         // for JDBC connection we use interface Connection
         Connection connection = DriverManager.getConnection(demoHR, dbUserName, dbPassword);
 
@@ -89,10 +89,10 @@ public class PostgreS {
         DatabaseMetaData dbMetadata = connection.getMetaData();
 
         // Return username of the database
-        System.out.println("Database User: " + dbMetadata.getUserName());
+        System.out.println("DBType User: " + dbMetadata.getUserName());
 
         // Return database type
-        System.out.println("Database type: " + dbMetadata.getDatabaseProductName());
+        System.out.println("DBType type: " + dbMetadata.getDatabaseProductName());
 
         // Resultset Metadata will query the results
         ResultSetMetaData rsMetadata = resultSet.getMetaData();

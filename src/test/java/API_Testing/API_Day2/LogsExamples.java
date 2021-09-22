@@ -1,8 +1,6 @@
-package api_Class.API_Day2;
+package API_Testing.API_Day2;
 
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 // Logs display information from the request and response when making calls to an API server.

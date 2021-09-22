@@ -11,25 +11,25 @@ public class introRestAssured {
 // Rest Assured works with HTTP request methods such as GET(read), POST(create), PUT(update) and DELETE(delete);
 // but as a tester you'll mainly use GET to request data from a server, and POST to create data to a server.
 // Testers mostly read or create data and for that purpose GET and POST is used, PUT and DELETE will only be used when needed.
-
+//
 // NOTE: As testers, We will only work REST API because it supports Json, xml, and text formats, but Json will be our
 // primary source used for testing REST API with REST-assured.
-
+//
 // Most often used methods from Rest-Asssured library when writing tests
 // To make requests:
-    // given() --> used to prepare the request
-    // when() and get() or just when() --> used to send the request
-    // then() --> used to verify the request
+//     given() --> used to prepare the request
+//     when() and get() or just when() --> used to send the request
+//     then() --> used to verify the request
 // To verify responses:
-    // prettyPeek() --> used to print the response
-    // prettyPrint()
-    // log() --> logs(prints) all the response
-    // asString() --> used to print in String format
-    // contentType() --> used to verify body response header is in Json or XML format when using POST request.
-    // accept() --> used to verify body response header when making a GET request
-
-    // In order to make a request we need to identify the baseURI
-    // baseURI --> saves the base URL for all resources
+//     prettyPeek() --> used to print the response
+//     prettyPrint()
+//     log() --> logs(prints) all the response
+//     asString() --> used to print in String format
+//     contentType() --> used to verify body response header is in Json or XML format when using POST request.
+//     accept() --> used to verify body response header when making a GET request
+//
+//     In order to make a request we need to identify the baseURI
+//     baseURI --> saves the base URL for all resources
     public static String baseURI = "https://api.octoperf.com";
 
     // When we make requests, we only provide the path(endpoint) to a specific base resource(url)

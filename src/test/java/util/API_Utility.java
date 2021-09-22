@@ -12,7 +12,7 @@ import java.util.Map;
 import static org.apache.http.HttpStatus.SC_OK;
 
 
-public class API_Utils {
+public class API_Utility {
     public String path;
     public String octoperfToken;
     public static Response response;

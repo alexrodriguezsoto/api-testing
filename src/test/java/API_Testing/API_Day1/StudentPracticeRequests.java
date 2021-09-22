@@ -1,6 +1,5 @@
-package api_Class.API_Day1;
+package API_Testing.API_Day1;
 
-import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
@@ -91,3 +90,4 @@ public class StudentPracticeRequests {
 
     }
 }
+

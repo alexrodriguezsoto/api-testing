@@ -25,7 +25,7 @@ Response Logging --> used after then()
 - get("/x".then().log().ifStatusCodeisEqualTo(200) --> log only if the status code is equal to 200
  */
 
-public class LogsExamples {
+public class _05_LogsExamples {
 
 // ***** Request logging examples
 

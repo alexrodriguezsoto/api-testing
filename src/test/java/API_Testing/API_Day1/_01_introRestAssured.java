@@ -4,7 +4,7 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.testng.annotations.Test;
 
-public class introRestAssured {
+public class _01_introRestAssured {
 // Rest Assured is a Java library class that is used to perform automated API tests which
 // uses gherkin BDD style statements such as given, when, then, and, etc to write such tests.
 // Rest Assured has methods to fetch data from response when making requests from a JSON structure.

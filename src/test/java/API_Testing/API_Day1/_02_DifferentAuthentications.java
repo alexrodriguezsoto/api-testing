@@ -3,7 +3,7 @@ package API_Testing.API_Day1;
 import io.restassured.RestAssured;
 import org.testng.annotations.Test;
 
-public class DifferentAuthentications {
+public class _02_DifferentAuthentications {
 
     @Test
     public void usingApiKey(){ //I got this API key long time ago, you don't have to get it, this is just an example of api key.

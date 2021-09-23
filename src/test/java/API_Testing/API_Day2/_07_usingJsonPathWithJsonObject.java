@@ -5,7 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 // JsonPath simple example
-public class usingJsonPathWithJsonObject {
+public class _07_usingJsonPathWithJsonObject {
 
     @Test
     public void testJsonBody(){

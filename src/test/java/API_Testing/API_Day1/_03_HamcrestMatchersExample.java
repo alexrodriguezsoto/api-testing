@@ -10,7 +10,7 @@ import java.util.List;
 Hamcrest library provides matchers which are simply assertion methods, that's why Rest-Assured uses
 hamcrest's assertions in tests. Hamcrest works with both JUnit and TestNG.
  */
-public class HamcrestMatchersExample {
+public class _03_HamcrestMatchersExample {
 // any hamcrest's matchers assertions that is not correct will fail.
 
     @Test

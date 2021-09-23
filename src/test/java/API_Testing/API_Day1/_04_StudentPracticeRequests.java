@@ -11,7 +11,7 @@ import static io.restassured.RestAssured.*; // this import will get all methods
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
-public class StudentPracticeRequests {
+public class _04_StudentPracticeRequests {
     private final String API_KEY = "special-key";
     Response response;
 

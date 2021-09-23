@@ -14,7 +14,7 @@ also verify the response we get after we log in
  */
 
 
-public class LogInAndVerifyResponse1 {
+public class _06_LogInAndVerifyResponse1 {
 
     // After making a POST request to log in, the website asks for a token that we'll get from Postman to gain access.
     // FULL URL : https://api.octoperf.com/public/users/login

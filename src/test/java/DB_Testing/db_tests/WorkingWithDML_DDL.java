@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.List;
 import java.util.Map;
 
-public class UsingDMLCommads {
+public class WorkingWithDML_DDL {
     public static void main(String... args) throws SQLException, ClassNotFoundException {
 //        createTable();
 //        InsertToDB();

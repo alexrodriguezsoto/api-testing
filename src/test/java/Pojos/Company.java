@@ -1,8 +1,8 @@
 package Pojos;
 /*
 POJO stands for Plain Old Java Object.
-A Pojo class must be public, and its variables must be private
-A Pojo can have a constructor with arguments, the variables should have getter and setters to access data.
+A Pojo class must be public, and its variables must be private to improve the security of the project.
+A Pojo can have a constructor with arguments, and it should have getter and setters to access data by other java programs.
 Pojo classes are used for creating JSON and XML payloads(data) for API.
  */
 public class Company {

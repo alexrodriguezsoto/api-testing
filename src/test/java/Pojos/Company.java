@@ -18,16 +18,6 @@ public class Company {
         this.title = title;
     }
 
-    @Override
-    public String toString() {
-        return "Company{" +
-                "name=" + name +
-                ", companyId=" + companyId +
-                ", companyName='" + companyName + '\'' +
-                ", title='" + title + '\'' +
-                '}';
-    }
-
     public void setName(String name){
         this.name = name;
     }
@@ -51,5 +41,16 @@ public class Company {
     }
     public String getTitle(){
         return this.title;
+    }
+
+
+    @Override
+    public String toString() { // toString() will print the result in String format
+        return "Company{" +
+                "name=" + name +
+                ", companyId=" + companyId +
+                ", companyName='" + companyName + '\'' +
+                ", title='" + title + '\'' +
+                '}';
     }
 }

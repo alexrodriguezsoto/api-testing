@@ -1,0 +1,7 @@
+<suite name="octoperfTest">
+    <test name="testngTest">
+        <classes>
+            <class name="API_Testing.API_Day3.VerifyMemberResponses" />
+        </classes>
+    </test>
+</suite>

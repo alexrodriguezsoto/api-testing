@@ -63,12 +63,12 @@ public class VerifyMemberResponses {
 // verifying using TestNG's Assert class and jsonPath's getString() method to verify body
         Assert.assertEquals(200, response.statusCode());
         Assert.assertEquals("Default", response.jsonPath().getString("name[0]"));
-        Assert.assertEquals("Wkt3tHgB6T29TqnSuTha", response.jsonPath().getString("id[0]"));
+        Assert.assertEquals("wAf7I3wB10t72x7FjLsY", response.jsonPath().getString("id[0]"));
         Assert.assertEquals("1kt3tHgB6T29TqnSCje3", response.jsonPath().getString("userId[0]"));
         Assert.assertEquals("", response.jsonPath().getString("description[0]"));
 
         // We need to get the id from default member in order to get access into AdminAccess
-        defaultId = response.jsonPath().get("id[0]"); // Wkt3tHgB6T29TqnSuTha
+        defaultId = response.jsonPath().get("id[0]"); // wAf7I3wB10t72x7FjLsY
     }
 
     // Verify AdminAccess member's status code, userId, and workspaceId
@@ -87,7 +87,7 @@ public class VerifyMemberResponses {
         assertThat(userId, is("1kt3tHgB6T29TqnSCje3"));
 
         workspaceId = response.jsonPath().get("workspaceId[0]");
-        assertThat(workspaceId, is("Wkt3tHgB6T29TqnSuTha"));
+        assertThat(workspaceId, is("wAf7I3wB10t72x7FjLsY"));
 
         // Store Admin's userId and workspaceId into a hashmap which we'll use in order to crate a project
         workspaceID = new HashMap<String, String>();
@@ -126,7 +126,7 @@ public class VerifyMemberResponses {
     // update created project
     @Test(dependsOnMethods ={"createProject"} )
     public void updateProjectsName() {
-        String requestBody2 = "{\"created\":1615443320845,\"description\":\"testing\",\"id\":\""+id2+"\",\"lastModified\":1629860121757,\"name\":\"testing Soto\",\"tags\":[],\"type\":\"DESIGN\",\"userId\":\"1kt3tHgB6T29TqnSCje3\",\"workspaceId\":\"Wkt3tHgB6T29TqnSuTha\"}";
+        String requestBody2 = "{\"created\":1615443320845,\"description\":\"testing\",\"id\":\""+id2+"\",\"lastModified\":1629860121757,\"name\":\"testing Soto\",\"tags\":[],\"type\":\"DESIGN\",\"userId\":\"1kt3tHgB6T29TqnSCje3\",\"workspaceId\":\"wAf7I3wB10t72x7FjLsY\"}";
 
         response = RestAssured.given()
                 .headers("Content-type", "application/json")
